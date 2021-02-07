@@ -13,6 +13,9 @@ function generateMarkdown(rulesDb, filename) {
 
   outStream.write('# ESLint Config Comparison\n\n')
 
+  outStream.write('\u2714\ufe0f: Rule enabled\n')
+  outStream.write('\u274c: Rule turned off\n\n')
+
   const packages = [
     'eslint',
     '@typescript-eslint/eslint-plugin',
@@ -36,7 +39,15 @@ function generateMarkdown(rulesDb, filename) {
   rulesDb.getRules().forEach(rule => {
     outStream.write(`|${rule.name.replace('@typescript-eslint', '@ts-eslint')}|`)
     for (let name of configNames) {
-      outStream.write(`${rule[name] ? " \u2714\ufe0f " : "   "} |`)
+      const ruleVal = rule[name]
+      let cellVal = "   "
+      if (ruleVal && ruleVal[0] === 'off') {
+        cellVal = ' \u274c '
+      } else if (ruleVal !== undefined) {
+        cellVal = ' \u2714\ufe0f '
+      }
+
+      outStream.write(`${cellVal} |`)
     }
     outStream.write('\n')
   })
