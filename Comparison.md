@@ -3,11 +3,11 @@
 ✔️: Rule enabled
 ❌: Rule turned off
 
-eslint: `7.19.0`
+eslint: `8.11.0`
 
-@typescript-eslint/eslint-plugin: `4.14.2`
+@typescript-eslint/eslint-plugin: `5.16.0`
 
-eslint-config-airbnb-base: `14.2.1`
+eslint-config-airbnb-base: `15.0.0`
 
 |   |eslint:rec |@ts/rec |@ts/eslint-rec |airbnb |
 |---|:-:|:-:|:-:|:-:|
@@ -45,13 +45,14 @@ eslint-config-airbnb-base: `14.2.1`
 |consistent-this|    |    |    |    |
 |@ts-eslint/consistent-type-assertions|    |    |    |    |
 |@ts-eslint/consistent-type-definitions|    |    |    |    |
+|@ts-eslint/consistent-type-exports|    |    |    |    |
 |@ts-eslint/consistent-type-imports|    |    |    |    |
 |constructor-super| ✔️  | ❌  | ❌  | ✔️  |
 |curly|    |    |    | ✔️  |
 |default-case|    |    |    | ✔️  |
-|default-case-last|    |    |    |    |
+|default-case-last|    |    |    | ✔️  |
 |@ts-eslint/default-param-last|    |    |    |    |
-|default-param-last|    |    |    |    |
+|default-param-last|    |    |    | ✔️  |
 |dot-location|    |    |    | ✔️  |
 |@ts-eslint/dot-notation|    |    |    |    |
 |dot-notation|    |    |    | ✔️  |
@@ -59,19 +60,19 @@ eslint-config-airbnb-base: `14.2.1`
 |eqeqeq|    |    |    | ✔️  |
 |@ts-eslint/explicit-function-return-type|    |    |    |    |
 |@ts-eslint/explicit-member-accessibility|    |    |    |    |
-|@ts-eslint/explicit-module-boundary-types|    | ✔️  |    |    |
+|@ts-eslint/explicit-module-boundary-types|    |    |    |    |
 |for-direction| ✔️  |    |    | ✔️  |
 |@ts-eslint/func-call-spacing|    |    |    |    |
 |func-call-spacing|    |    |    | ✔️  |
 |func-name-matching|    |    |    |    |
 |func-names|    |    |    | ✔️  |
 |func-style|    |    |    |    |
-|function-call-argument-newline|    |    |    |    |
+|function-call-argument-newline|    |    |    | ✔️  |
 |function-paren-newline|    |    |    | ✔️  |
 |generator-star-spacing|    |    |    | ✔️  |
 |getter-return| ✔️  | ❌  | ❌  | ✔️  |
 |global-require|    |    |    | ✔️  |
-|grouped-accessor-pairs|    |    |    |    |
+|grouped-accessor-pairs|    |    |    | ✔️  |
 |guard-for-in|    |    |    | ✔️  |
 |id-denylist|    |    |    |    |
 |id-length|    |    |    |    |
@@ -88,10 +89,12 @@ eslint-config-airbnb-base: `14.2.1`
 |import/no-duplicates|    |    |    | ✔️  |
 |import/no-dynamic-require|    |    |    | ✔️  |
 |import/no-extraneous-dependencies|    |    |    | ✔️  |
+|import/no-import-module-exports|    |    |    | ✔️  |
 |import/no-mutable-exports|    |    |    | ✔️  |
 |import/no-named-as-default|    |    |    | ✔️  |
 |import/no-named-as-default-member|    |    |    | ✔️  |
 |import/no-named-default|    |    |    | ✔️  |
+|import/no-relative-packages|    |    |    | ✔️  |
 |import/no-self-import|    |    |    | ✔️  |
 |import/no-unresolved|    |    |    | ✔️  |
 |import/no-useless-path-segments|    |    |    | ✔️  |
@@ -149,7 +152,7 @@ eslint-config-airbnb-base: `14.2.1`
 |no-console|    |    |    | ✔️  |
 |no-const-assign| ✔️  | ❌  | ❌  | ✔️  |
 |no-constant-condition| ✔️  |    |    | ✔️  |
-|no-constructor-return|    |    |    |    |
+|no-constructor-return|    |    |    | ✔️  |
 |no-continue|    |    |    | ✔️  |
 |no-control-regex| ✔️  |    |    | ✔️  |
 |no-debugger| ✔️  |    |    | ✔️  |
@@ -158,7 +161,7 @@ eslint-config-airbnb-base: `14.2.1`
 |no-dupe-args| ✔️  | ❌  | ❌  | ✔️  |
 |@ts-eslint/no-dupe-class-members|    |    |    |    |
 |no-dupe-class-members| ✔️  | ❌  | ❌  | ✔️  |
-|no-dupe-else-if| ✔️  |    |    |    |
+|no-dupe-else-if| ✔️  |    |    | ✔️  |
 |no-dupe-keys| ✔️  | ❌  | ❌  | ✔️  |
 |no-duplicate-case| ✔️  |    |    | ✔️  |
 |@ts-eslint/no-duplicate-imports|    |    |    |    |
@@ -191,12 +194,11 @@ eslint-config-airbnb-base: `14.2.1`
 |@ts-eslint/no-for-in-array|    |    | ✔️  |    |
 |no-func-assign| ✔️  | ❌  | ❌  | ✔️  |
 |no-global-assign| ✔️  |    |    | ✔️  |
-|@ts-eslint/no-implicit-any-catch|    |    |    |    |
 |no-implicit-coercion|    |    |    |    |
 |no-implicit-globals|    |    |    |    |
 |@ts-eslint/no-implied-eval|    |    | ✔️  |    |
 |no-implied-eval|    |    | ❌  | ✔️  |
-|no-import-assign| ✔️  | ❌  | ❌  |    |
+|no-import-assign| ✔️  | ❌  | ❌  | ✔️  |
 |@ts-eslint/no-inferrable-types|    | ✔️  |    |    |
 |no-inline-comments|    |    |    |    |
 |no-inner-declarations| ✔️  |    |    | ✔️  |
@@ -212,10 +214,11 @@ eslint-config-airbnb-base: `14.2.1`
 |no-lonely-if|    |    |    | ✔️  |
 |@ts-eslint/no-loop-func|    |    |    |    |
 |no-loop-func|    |    |    | ✔️  |
-|@ts-eslint/no-loss-of-precision|    |    |    |    |
-|no-loss-of-precision|    |    |    |    |
+|@ts-eslint/no-loss-of-precision|    | ✔️  |    |    |
+|no-loss-of-precision| ✔️  | ❌  |    | ✔️  |
 |@ts-eslint/no-magic-numbers|    |    |    |    |
 |no-magic-numbers|    |    |    |    |
+|@ts-eslint/no-meaningless-void-operator|    |    |    |    |
 |no-misleading-character-class| ✔️  |    |    | ✔️  |
 |@ts-eslint/no-misused-new|    | ✔️  |    |    |
 |@ts-eslint/no-misused-promises|    |    | ✔️  |    |
@@ -234,9 +237,10 @@ eslint-config-airbnb-base: `14.2.1`
 |no-new-require|    |    |    | ✔️  |
 |no-new-symbol| ✔️  | ❌  | ❌  | ✔️  |
 |no-new-wrappers|    |    |    | ✔️  |
+|@ts-eslint/no-non-null-asserted-nullish-coalescing|    |    |    |    |
 |@ts-eslint/no-non-null-asserted-optional-chain|    | ✔️  |    |    |
 |@ts-eslint/no-non-null-assertion|    | ✔️  |    |    |
-|no-nonoctal-decimal-escape|    |    |    |    |
+|no-nonoctal-decimal-escape| ✔️  |    |    | ✔️  |
 |no-obj-calls| ✔️  | ❌  | ❌  | ✔️  |
 |no-octal| ✔️  |    |    | ✔️  |
 |no-octal-escape|    |    |    | ✔️  |
@@ -244,15 +248,17 @@ eslint-config-airbnb-base: `14.2.1`
 |@ts-eslint/no-parameter-properties|    |    |    |    |
 |no-path-concat|    |    |    | ✔️  |
 |no-plusplus|    |    |    | ✔️  |
-|no-promise-executor-return|    |    |    |    |
+|no-promise-executor-return|    |    |    | ✔️  |
 |no-proto|    |    |    | ✔️  |
 |no-prototype-builtins| ✔️  |    |    | ✔️  |
 |@ts-eslint/no-redeclare|    |    |    |    |
 |no-redeclare| ✔️  | ❌  | ❌  | ✔️  |
+|@ts-eslint/no-redundant-type-constituents|    |    |    |    |
 |no-regex-spaces| ✔️  |    |    | ✔️  |
 |@ts-eslint/no-require-imports|    |    |    |    |
-|no-restricted-exports|    |    |    |    |
+|no-restricted-exports|    |    |    | ✔️  |
 |no-restricted-globals|    |    |    | ✔️  |
+|@ts-eslint/no-restricted-imports|    |    |    |    |
 |no-restricted-imports|    |    |    |    |
 |no-restricted-properties|    |    |    | ✔️  |
 |no-restricted-syntax|    |    |    | ✔️  |
@@ -262,7 +268,7 @@ eslint-config-airbnb-base: `14.2.1`
 |no-self-assign| ✔️  |    |    | ✔️  |
 |no-self-compare|    |    |    | ✔️  |
 |no-sequences|    |    |    | ✔️  |
-|no-setter-return| ✔️  | ❌  | ❌  |    |
+|no-setter-return| ✔️  | ❌  | ❌  | ✔️  |
 |@ts-eslint/no-shadow|    |    |    |    |
 |no-shadow|    |    |    | ✔️  |
 |no-shadow-restricted-names| ✔️  |    |    | ✔️  |
@@ -288,31 +294,34 @@ eslint-config-airbnb-base: `14.2.1`
 |@ts-eslint/no-unnecessary-qualifier|    |    |    |    |
 |@ts-eslint/no-unnecessary-type-arguments|    |    |    |    |
 |@ts-eslint/no-unnecessary-type-assertion|    |    | ✔️  |    |
-|@ts-eslint/no-unnecessary-type-constraint|    |    |    |    |
+|@ts-eslint/no-unnecessary-type-constraint|    | ✔️  |    |    |
 |no-unneeded-ternary|    |    |    | ✔️  |
 |no-unreachable| ✔️  | ❌  | ❌  | ✔️  |
-|no-unreachable-loop|    |    |    |    |
+|no-unreachable-loop|    |    |    | ✔️  |
+|@ts-eslint/no-unsafe-argument|    |    | ✔️  |    |
 |@ts-eslint/no-unsafe-assignment|    |    | ✔️  |    |
 |@ts-eslint/no-unsafe-call|    |    | ✔️  |    |
 |no-unsafe-finally| ✔️  |    |    | ✔️  |
 |@ts-eslint/no-unsafe-member-access|    |    | ✔️  |    |
 |no-unsafe-negation| ✔️  | ❌  | ❌  | ✔️  |
-|no-unsafe-optional-chaining|    |    |    |    |
+|no-unsafe-optional-chaining| ✔️  |    |    | ✔️  |
 |@ts-eslint/no-unsafe-return|    |    | ✔️  |    |
 |@ts-eslint/no-unused-expressions|    |    |    |    |
 |no-unused-expressions|    |    |    | ✔️  |
 |no-unused-labels| ✔️  |    |    | ✔️  |
+|no-unused-private-class-members|    |    |    |    |
 |@ts-eslint/no-unused-vars|    | ✔️  |    |    |
 |no-unused-vars| ✔️  | ❌  |    | ✔️  |
 |@ts-eslint/no-use-before-define|    |    |    |    |
 |no-use-before-define|    |    |    | ✔️  |
-|no-useless-backreference|    |    |    |    |
+|no-useless-backreference| ✔️  |    |    | ✔️  |
 |no-useless-call|    |    |    |    |
 |no-useless-catch| ✔️  |    |    | ✔️  |
 |no-useless-computed-key|    |    |    | ✔️  |
 |no-useless-concat|    |    |    | ✔️  |
 |@ts-eslint/no-useless-constructor|    |    |    |    |
 |no-useless-constructor|    |    |    | ✔️  |
+|@ts-eslint/no-useless-empty-export|    |    |    |    |
 |no-useless-escape| ✔️  |    |    | ✔️  |
 |no-useless-rename|    |    |    | ✔️  |
 |no-useless-return|    |    |    | ✔️  |
@@ -334,13 +343,14 @@ eslint-config-airbnb-base: `14.2.1`
 |operator-assignment|    |    |    | ✔️  |
 |operator-linebreak|    |    |    | ✔️  |
 |padded-blocks|    |    |    | ✔️  |
+|@ts-eslint/padding-line-between-statements|    |    |    |    |
 |padding-line-between-statements|    |    |    |    |
 |prefer-arrow-callback|    |    |    | ✔️  |
 |@ts-eslint/prefer-as-const|    | ✔️  |    |    |
 |prefer-const|    | ✔️  | ✔️  | ✔️  |
 |prefer-destructuring|    |    |    | ✔️  |
 |@ts-eslint/prefer-enum-initializers|    |    |    |    |
-|prefer-exponentiation-operator|    |    |    |    |
+|prefer-exponentiation-operator|    |    |    | ✔️  |
 |@ts-eslint/prefer-for-of|    |    |    |    |
 |@ts-eslint/prefer-function-type|    |    |    |    |
 |@ts-eslint/prefer-includes|    |    |    |    |
@@ -349,15 +359,17 @@ eslint-config-airbnb-base: `14.2.1`
 |@ts-eslint/prefer-namespace-keyword|    | ✔️  |    |    |
 |@ts-eslint/prefer-nullish-coalescing|    |    |    |    |
 |prefer-numeric-literals|    |    |    | ✔️  |
+|prefer-object-has-own|    |    |    |    |
 |prefer-object-spread|    |    |    | ✔️  |
 |@ts-eslint/prefer-optional-chain|    |    |    |    |
 |prefer-promise-reject-errors|    |    |    | ✔️  |
 |@ts-eslint/prefer-readonly|    |    |    |    |
 |@ts-eslint/prefer-readonly-parameter-types|    |    |    |    |
 |@ts-eslint/prefer-reduce-type-parameter|    |    |    |    |
-|prefer-regex-literals|    |    |    |    |
-|@ts-eslint/prefer-regexp-exec|    |    | ✔️  |    |
+|prefer-regex-literals|    |    |    | ✔️  |
+|@ts-eslint/prefer-regexp-exec|    |    |    |    |
 |prefer-rest-params|    | ✔️  | ✔️  | ✔️  |
+|@ts-eslint/prefer-return-this-type|    |    |    |    |
 |prefer-spread|    | ✔️  | ✔️  | ✔️  |
 |@ts-eslint/prefer-string-starts-ends-with|    |    |    |    |
 |prefer-template|    |    |    | ✔️  |
@@ -385,6 +397,7 @@ eslint-config-airbnb-base: `14.2.1`
 |sort-keys|    |    |    |    |
 |@ts-eslint/sort-type-union-intersection-members|    |    |    |    |
 |sort-vars|    |    |    |    |
+|@ts-eslint/space-before-blocks|    |    |    |    |
 |space-before-blocks|    |    |    | ✔️  |
 |@ts-eslint/space-before-function-paren|    |    |    |    |
 |space-before-function-paren|    |    |    | ✔️  |
