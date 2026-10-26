@@ -16,8 +16,7 @@ const loadConfigs = async () => {
     all: plugin.configs.all.rules,
     recommended: await calculateRules('recommended'),
     'recommended-type-checked': await calculateRules('recommended-type-checked'),
-    // Ruleset that disables rules only
-    'eslint-recommended': await calculateRules('eslint-recommended'),
+    'recommended-type-checked-only': await calculateRules('recommended-type-checked-only'),
   }
 }
 

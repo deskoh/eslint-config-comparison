@@ -13,7 +13,7 @@ async function generate() {
 
   rulesDb.addConfig(eslintConfig.recommended, 'eslint:recommended')
   rulesDb.addConfig(typescriptConfig.recommended, '@ts/recommended')
-  rulesDb.addConfig(typescriptConfig['eslint-recommended'], '@ts/eslint-recommended')
+  rulesDb.addConfig(typescriptConfig['recommended-type-checked-only'], '@ts/tc-only')
 
   console.log(rulesDb.count())
 
