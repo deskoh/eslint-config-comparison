@@ -37,15 +37,22 @@ function generateMarkdown(rulesDb, filename) {
   ]
   packages.forEach(pkg => writePackageVersion(outStream, pkg))
 
-  outStream.write('|   |')
   const configNames = Object.keys(rulesDb.getConfigs())
-  for (let name of configNames) {
-    outStream.write(`${name.replace('recommended', 'rec')} |`)
+  // Effective value when the configs are applied left to right (later configs override earlier ones)
+  const effective = rule => configNames.reduce((val, name) => rule[name] !== undefined ? rule[name] : val, undefined)
+  const columns = [
+    ...configNames.map(name => ({ header: name.replace('recommended', 'rec'), value: rule => rule[name] })),
+    { header: '**effective**', value: effective },
+  ]
+
+  outStream.write('|   |')
+  for (let column of columns) {
+    outStream.write(`${column.header} |`)
   }
   outStream.write('\n')
 
   outStream.write('|---|')
-  for (let _ of configNames) {
+  for (let _ of columns) {
     outStream.write(`:-:|`)
   }
   outStream.write('\n')
@@ -53,8 +60,8 @@ function generateMarkdown(rulesDb, filename) {
   const rules = rulesDb.getRules()
   const countRow = (label, predicate) => {
     outStream.write(`|**${label}**|`)
-    for (let name of configNames) {
-      const count = rules.filter(rule => rule[name] !== undefined && predicate(rule[name])).length
+    for (let column of columns) {
+      const count = rules.filter(rule => column.value(rule) !== undefined && predicate(column.value(rule))).length
       outStream.write(` **${count}** |`)
     }
     outStream.write('\n')
@@ -65,8 +72,8 @@ function generateMarkdown(rulesDb, filename) {
   rules.forEach(rule => {
     const suffix = isDeprecated(rule.name) ? ' \u{1f480}' : ''
     outStream.write(`|${rule.name.replace('@typescript-eslint', '@ts-eslint')}${suffix}|`)
-    for (let name of configNames) {
-      const ruleVal = rule[name]
+    for (let column of columns) {
+      const ruleVal = column.value(rule)
       let cellVal = "   "
       if (ruleVal && isOff(ruleVal)) {
         cellVal = ' \u274c '

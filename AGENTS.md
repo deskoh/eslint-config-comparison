@@ -15,7 +15,7 @@ node index.js
 
 1. `config/<source>.js` exports an async loader that returns `{ all, <preset>: rules, ... }`. `all` is every rule the source knows (sets the rows); each other key is the resolved rule map for one preset (one column).
 2. `index.js` adds every `all` to a `RulesDb` with `addRules`, then adds each preset as a column with `addConfig(rules, columnName)`. Columns appear in the order of the `addConfig` calls.
-3. `Utils.js` `generateMarkdown` writes the header, the package versions, and the table.
+3. `Utils.js` `generateMarkdown` writes the header, the package versions, and the table. The table starts with enabled/turned-off count rows and ends with an `effective` column: the value a rule ends up with when the presets are applied left to right (later columns override earlier ones), so column order matters.
 
 ## Adding or removing a preset
 
