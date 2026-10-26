@@ -19,7 +19,6 @@ function generateMarkdown(rulesDb, filename) {
   const packages = [
     'eslint',
     '@typescript-eslint/eslint-plugin',
-    'eslint-config-airbnb-base'
   ]
   packages.forEach(pkg => writePackageVersion(outStream, pkg))
 
