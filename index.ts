@@ -1,7 +1,7 @@
-const eslint = require('./config/eslint')
-const typescript = require('./config/typescript-eslint')
-const RulesDb = require('./RulesDb')
-const { generateMarkdown } = require('./Utils')
+import eslint from './config/eslint.ts'
+import typescript from './config/typescript-eslint.ts'
+import RulesDb from './RulesDb.ts'
+import { generateMarkdown } from './Utils.ts'
 
 async function generate() {
   const eslintConfig = await eslint()

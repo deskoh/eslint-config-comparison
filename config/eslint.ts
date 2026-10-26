@@ -1,5 +1,6 @@
-const { ESLint } = require('eslint')
-const js = require('@eslint/js')
+import { ESLint } from 'eslint'
+import js from '@eslint/js'
+import type { RulesConfig } from '../RulesDb.ts'
 
 const loadConfigs = async () => {
   let eslint = new ESLint({
@@ -10,9 +11,9 @@ const loadConfigs = async () => {
   let config = await eslint.calculateConfigForFile('dummy.js')
 
   return {
-    all: js.configs.all.rules,
-    recommended: config.rules,
+    all: js.configs.all.rules as RulesConfig,
+    recommended: config.rules as RulesConfig,
   }
 }
 
-module.exports = loadConfigs
+export default loadConfigs

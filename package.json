@@ -2,7 +2,11 @@
   "name": "eslint-ruleset",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
+  "main": "index.ts",
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "dependencies": {
     "@eslint/js": "^10.0.1",
     "@typescript-eslint/eslint-plugin": "^8.72.0",
@@ -12,10 +16,15 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
+    "generate": "node index.ts",
+    "typecheck": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@11.1.2"
+  "packageManager": "pnpm@11.1.2",
+  "devDependencies": {
+    "@types/node": "^24.19.2"
+  }
 }
