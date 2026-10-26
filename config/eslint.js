@@ -1,5 +1,6 @@
 const { builtinRules } = require("eslint/use-at-your-own-risk");
 const { ESLint } = require('eslint')
+const js = require('@eslint/js')
 
 const allRules = {};
 for (const ruleId of builtinRules.keys()) {
@@ -10,7 +11,8 @@ for (const ruleId of builtinRules.keys()) {
 
 const loadConfigs = async () => {
   let eslint = new ESLint({
-    baseConfig: { extends: ['eslint:recommended'] }
+    overrideConfigFile: true,
+    overrideConfig: [js.configs.recommended],
   });
 
   let config = await eslint.calculateConfigForFile('dummy.js')
