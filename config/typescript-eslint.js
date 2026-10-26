@@ -17,7 +17,7 @@ const loadConfigs = async () => {
   const recTypeCheckRules = config.rules
 
   eslint = new ESLint({
-    baseConfig: { extends: ['plugin:@typescript-eslint/recommended-requiring-type-checking'] }
+    baseConfig: { extends: ['plugin:@typescript-eslint/eslint-recommended'] }
   });
 
   config = await eslint.calculateConfigForFile('dummy.ts')
