@@ -8,12 +8,17 @@ import type { Rule } from './RulesDb.ts'
 
 const require = createRequire(import.meta.url)
 
-function isDeprecated(ruleName: string) {
+interface RuleMeta {
+  deprecated?: unknown
+  docs?: { url?: string }
+}
+
+function getRuleMeta(ruleName: string): RuleMeta | undefined {
   const prefix = '@typescript-eslint/'
   const rule = ruleName.startsWith(prefix)
-    ? (tsPlugin.rules as Record<string, { meta?: { deprecated?: unknown } }>)[ruleName.slice(prefix.length)]
+    ? (tsPlugin.rules as Record<string, { meta?: RuleMeta }>)[ruleName.slice(prefix.length)]
     : builtinRules.get(ruleName)
-  return Boolean(rule && rule.meta && rule.meta.deprecated)
+  return rule?.meta
 }
 
 function isOff(ruleVal: Linter.RuleEntry) {
@@ -85,8 +90,11 @@ export function generateMarkdown(rulesDb: RulesDb, filename: string) {
   countRow('❌ turned off', isOff)
 
   rules.forEach(rule => {
-    const suffix = isDeprecated(rule.name) ? ' \u{1f480}' : ''
-    outStream.write(`|${rule.name.replace('@typescript-eslint', '@ts-eslint')}${suffix}|`)
+    const meta = getRuleMeta(rule.name)
+    const suffix = meta?.deprecated ? ' \u{1f480}' : ''
+    const displayName = rule.name.replace('@typescript-eslint', '@ts-eslint')
+    const url = meta?.docs?.url
+    outStream.write(`|${url ? `[${displayName}](${url})` : displayName}${suffix}|`)
     for (let column of columns) {
       const ruleVal = column.value(rule)
       let cellVal = "   "

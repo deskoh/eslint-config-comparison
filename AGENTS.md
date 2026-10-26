@@ -17,6 +17,12 @@ pnpm generate   # node index.ts (Node >= 22.18 runs .ts natively)
 2. `index.ts` adds every `all` to a `RulesDb` with `addRules`, then adds each preset as a column with `addConfig(rules, columnName)`. Columns appear in the order of the `addConfig` calls.
 3. `Utils.ts` `generateMarkdown` writes the header, the package versions, and the table. The table starts with enabled/turned-off count rows and ends with an `effective` column: the value a rule ends up with when the presets are applied left to right (later columns override earlier ones), so column order matters.
 
+## GitHub Pages
+
+`.github/workflows/pages.yml` runs on every push to `master` (Node 24). It installs from the committed `pnpm-lock.yaml`, typechecks, regenerates, and fails if `Comparison.md` differs from the committed copy. Then `pnpm build:site` (`site.ts`) renders `Comparison.md` with `marked` into `site/index.html`, which gets deployed. The page adds sticky headers and a rule-name filter in inline CSS and JS. Rule names link to each rule's `meta.docs.url`.
+
+Bump dependency versions manually and commit the updated lockfile together with the regenerated `Comparison.md`.
+
 ## Adding or removing a preset
 
 Look at commit `57b0e66` ("removed airbnb") for the full set of touch points. Adding a preset touches:
