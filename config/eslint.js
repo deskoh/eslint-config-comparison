@@ -1,13 +1,5 @@
-const { builtinRules } = require("eslint/use-at-your-own-risk");
 const { ESLint } = require('eslint')
 const js = require('@eslint/js')
-
-const allRules = {};
-for (const ruleId of builtinRules.keys()) {
-    if (!builtinRules.get(ruleId).meta.deprecated) {
-        allRules[ruleId] = "error";
-    }
-}
 
 const loadConfigs = async () => {
   let eslint = new ESLint({
@@ -18,7 +10,7 @@ const loadConfigs = async () => {
   let config = await eslint.calculateConfigForFile('dummy.js')
 
   return {
-    all: allRules,
+    all: js.configs.all.rules,
     recommended: config.rules,
   }
 }

@@ -14,7 +14,7 @@ class RulesDb {
       this.rules.set(name, { name })
       j++
     }
-    console.info(`${j}/${i} rules added`)
+    console.info(`${j}/${i} new rules added`)
   }
   addConfig(config, configName) {
     let i = 0
@@ -24,6 +24,7 @@ class RulesDb {
       if (entry === undefined) {
         entry = { name }
         this.rules.set(name, entry)
+        console.warn(`[WARN] Rule \`${name}\` is not in the rules list, but is in config \`${configName}\` (could be deprecated).`)
       }
       entry[configName] = config[name]
       i++
