@@ -16,7 +16,7 @@ async function generate() {
   rulesDb.addConfig(typescriptConfig.recommended, '@ts/recommended')
   rulesDb.addConfig(typescriptConfig['recommended-type-checked-only'], '@ts/tc-only')
 
-  console.log(rulesDb.count())
+  console.log(rulesDb.count() + ' rules total')
 
   generateMarkdown(rulesDb, 'Comparison.md', {
     title: 'ESLint Config Comparison',
@@ -24,21 +24,24 @@ async function generate() {
     effective: true,
   })
 
+  console.log('Generating Rslint comparison...')
+
   // typescript-eslint vs Rslint parity: only the rules the compared presets mention are rows
   const rslintConfig = await rslint([...Object.keys(typescriptConfig.all), ...Object.keys(eslintConfig.all)])
 
   const rslintDb = new RulesDb()
   rslintDb.addRules(Object.keys({
-    ...typescriptConfig.recommended,
-    ...typescriptConfig['recommended-type-checked-only'],
-    ...rslintConfig.recommended,
-    ...rslintConfig['recommended-type-checked-only'],
+    ...typescriptConfig.all,
+    ...eslintConfig.all,
   }))
+  rslintDb.addRules(Object.keys(rslintConfig.implemented))
 
-  rslintDb.addConfig(typescriptConfig.recommended, 'ts/recommended')
-  rslintDb.addConfig(rslintConfig.recommended, 'rslint:ts/recommended')
+  rslintDb.addConfig(typescriptConfig.recommended, '@ts/rec')
+  rslintDb.addConfig(rslintConfig.recommended, 'rslint:@ts/rec')
   rslintDb.addConfig(typescriptConfig['recommended-type-checked-only'], '@ts/tc-only')
-  rslintDb.addConfig(rslintConfig['recommended-type-checked-only'], 'rslint:ts/tc-only')
+  rslintDb.addConfig(rslintConfig['recommended-type-checked-only'], 'rslint:@ts/tc-only')
+
+  console.log(rulesDb.count() + ' rules total')
 
   generateMarkdown(rslintDb, 'comparison-rslint.md', {
     title: 'typescript-eslint vs Rslint Comparison',
