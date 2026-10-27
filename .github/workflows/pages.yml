@@ -33,10 +33,10 @@ jobs:
 
       - run: pnpm generate
 
-      - name: Check Comparison.md is up to date
+      - name: Check generated Markdown is up to date
         run: |
-          if ! git diff --exit-code Comparison.md; then
-            echo "::error file=Comparison.md::Comparison.md is out of date. Run 'pnpm generate' and commit the result."
+          if ! git diff --exit-code Comparison.md comparison-rslint.md; then
+            echo "::error::Comparison.md or comparison-rslint.md is out of date. Run 'pnpm generate' and commit the result."
             exit 1
           fi
 

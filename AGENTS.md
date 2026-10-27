@@ -17,9 +17,16 @@ pnpm generate   # node index.ts (Node >= 22.18 runs .ts natively)
 2. `index.ts` adds every `all` to a `RulesDb` with `addRules`, then adds each preset as a column with `addConfig(rules, columnName)`. Columns appear in the order of the `addConfig` calls.
 3. `Utils.ts` `generateMarkdown` writes the header, the package versions, and the table. The table starts with enabled/turned-off count rows and ends with an `effective` column: the value a rule ends up with when the presets are applied left to right (later columns override earlier ones), so column order matters.
 
+## Rslint parity file
+
+`comparison-rslint.md` is a second output (same generator run) comparing typescript-eslint and Rslint presets side by side: `ts/rec`, `rslint:ts/rec`, `ts/rec-tc`, `rslint:ts/rec-tc`. It has no `effective` column, and its rows are only the rules those four presets mention.
+
+- `config/rslint.ts` merges `ts.configs` from `@rslint/core` by hand (they are arrays of `{ files, rules }` entries with `plugins` as a name list, not ESLint flat config, so `calculateConfigForFile` can't resolve them).
+- The `rslint impl.` column (✅/🚫) comes from running the Rslint binary with every ESLint/typescript-eslint rule enabled and `--timing all`: rules Rslint ran are implemented, unknown ones are ignored silently. Generation therefore needs the platform's `@rslint/native-*` optional dependency.
+
 ## GitHub Pages
 
-`.github/workflows/pages.yml` runs on every push to `master` (Node 24). It installs from the committed `pnpm-lock.yaml`, typechecks, regenerates, and fails if `Comparison.md` differs from the committed copy. Then `pnpm build:site` (`site.ts`) renders `Comparison.md` with `marked` into `site/index.html`, which gets deployed. The page adds sticky headers and a rule-name filter in inline CSS and JS. Rule names link to each rule's `meta.docs.url`.
+`.github/workflows/pages.yml` runs on every push to `master` (Node 24). It installs from the committed `pnpm-lock.yaml`, typechecks, regenerates, and fails if `Comparison.md` or `comparison-rslint.md` differs from the committed copy. Then `pnpm build:site` (`site.ts`) renders `Comparison.md` with `marked` into `site/index.html`, which gets deployed. The page adds sticky headers and a rule-name filter in inline CSS and JS. Rule names link to each rule's `meta.docs.url`.
 
 Bump dependency versions manually and commit the updated lockfile together with the regenerated `Comparison.md`.
 
@@ -30,7 +37,7 @@ Look at commit `57b0e66` ("removed airbnb") for the full set of touch points. Ad
 - `package.json`: add the preset package as a dependency.
 - `config/<source>.ts`: resolve the preset with `new ESLint({ overrideConfigFile: true, overrideConfig: <flat config> }).calculateConfigForFile('dummy.<ext>')`. Use `dummy.ts` for TypeScript presets so config entries scoped to `.ts` files apply.
 - `index.ts`: call `addConfig`, and also `addRules` if the source brings new rules.
-- `Utils.ts`: add the package to `packages` so its version shows in the header.
+- `index.ts` (`generateMarkdown` call): add the package to `packages` so its version shows in the header.
 
 ## Conventions and gotchas
 

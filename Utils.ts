@@ -39,39 +39,52 @@ interface Column {
   value: (rule: Rule) => Linter.RuleEntry | undefined
 }
 
-export function generateMarkdown(rulesDb: RulesDb, filename: string) {
+export interface MarkdownOptions {
+  title: string
+  packages: string[]
+  /** Add the `effective` column (only meaningful when the columns are layered presets) */
+  effective: boolean
+  /** Add a column marking whether each rule is implemented in Rslint */
+  rslintImplemented?: Set<string>
+}
+
+export function generateMarkdown(rulesDb: RulesDb, filename: string, options: MarkdownOptions) {
   const outStream = fs.createWriteStream(filename)
 
-  outStream.write('# ESLint Config Comparison\n\n')
+  outStream.write(`# ${options.title}\n\n`)
 
   outStream.write('✔️: Rule enabled\n')
   outStream.write('❌: Rule turned off\n')
-  outStream.write('\u{1f480}: Rule deprecated\n\n')
+  outStream.write('\u{1f480}: Rule deprecated\n')
+  if (options.rslintImplemented) {
+    outStream.write('✅: Rule implemented in Rslint\n')
+    outStream.write('🚫: Rule not implemented in Rslint\n')
+  }
+  outStream.write('\n')
 
-  const packages = [
-    'eslint',
-    '@typescript-eslint/eslint-plugin',
-  ]
-  packages.forEach(pkg => writePackageVersion(outStream, pkg))
+  options.packages.forEach(pkg => writePackageVersion(outStream, pkg))
 
   const configNames = Object.keys(rulesDb.getConfigs())
   // Effective value when the configs are applied left to right (later configs override earlier ones)
   const effective = (rule: Rule) => configNames.reduce<Linter.RuleEntry | undefined>((val, name) => rule.values[name] !== undefined ? rule.values[name] : val, undefined)
   const columns: Column[] = [
     ...configNames.map(name => ({ header: name.replace('recommended', 'rec'), value: (rule: Rule) => rule.values[name] })),
-    { header: '**effective**', value: effective },
   ]
+  if (options.effective) columns.push({ header: '**effective**', value: effective })
+  const implemented = options.rslintImplemented
 
   outStream.write('|   |')
   for (let column of columns) {
     outStream.write(`${column.header} |`)
   }
+  if (implemented) outStream.write('**rslint impl.** |')
   outStream.write('\n')
 
   outStream.write('|---|')
   for (let _ of columns) {
     outStream.write(`:-:|`)
   }
+  if (implemented) outStream.write(':-:|')
   outStream.write('\n')
 
   const rules = rulesDb.getRules()
@@ -84,6 +97,7 @@ export function generateMarkdown(rulesDb: RulesDb, filename: string) {
       }).length
       outStream.write(` **${count}** |`)
     }
+    if (implemented) outStream.write(' |')
     outStream.write('\n')
   }
   countRow('✔️ enabled', ruleVal => !isOff(ruleVal))
@@ -106,6 +120,7 @@ export function generateMarkdown(rulesDb: RulesDb, filename: string) {
 
       outStream.write(`${cellVal} |`)
     }
+    if (implemented) outStream.write(`${implemented.has(rule.name) ? ' ✅ ' : ' 🚫 '} |`)
     outStream.write('\n')
   })
 }

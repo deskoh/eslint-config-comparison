@@ -1,4 +1,5 @@
 import eslint from './config/eslint.ts'
+import rslint from './config/rslint.ts'
 import typescript from './config/typescript-eslint.ts'
 import RulesDb from './RulesDb.ts'
 import { generateMarkdown } from './Utils.ts'
@@ -17,7 +18,34 @@ async function generate() {
 
   console.log(rulesDb.count())
 
-  generateMarkdown(rulesDb, 'Comparison.md')
+  generateMarkdown(rulesDb, 'Comparison.md', {
+    title: 'ESLint Config Comparison',
+    packages: ['eslint', '@typescript-eslint/eslint-plugin'],
+    effective: true,
+  })
+
+  // typescript-eslint vs Rslint parity: only the rules the compared presets mention are rows
+  const rslintConfig = await rslint([...Object.keys(typescriptConfig.all), ...Object.keys(eslintConfig.all)])
+
+  const rslintDb = new RulesDb()
+  rslintDb.addRules(Object.keys({
+    ...typescriptConfig.recommended,
+    ...typescriptConfig['recommended-type-checked'],
+    ...rslintConfig.recommended,
+    ...rslintConfig['recommended-type-checked'],
+  }))
+
+  rslintDb.addConfig(typescriptConfig.recommended, 'ts/recommended')
+  rslintDb.addConfig(rslintConfig.recommended, 'rslint:ts/recommended')
+  rslintDb.addConfig(typescriptConfig['recommended-type-checked'], 'ts/recommended-tc')
+  rslintDb.addConfig(rslintConfig['recommended-type-checked'], 'rslint:ts/recommended-tc')
+
+  generateMarkdown(rslintDb, 'comparison-rslint.md', {
+    title: 'typescript-eslint vs Rslint Comparison',
+    packages: ['@typescript-eslint/eslint-plugin', '@rslint/core'],
+    effective: false,
+    rslintImplemented: rslintConfig.implemented,
+  })
 }
 
 generate()
