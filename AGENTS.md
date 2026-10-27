@@ -19,9 +19,10 @@ pnpm generate   # node index.ts (Node >= 22.18 runs .ts natively)
 
 ## Rslint parity file
 
-`comparison-rslint.md` is a second output (same generator run) comparing typescript-eslint and Rslint presets side by side: `ts/rec`, `rslint:ts/rec`, `ts/rec-tc`, `rslint:ts/rec-tc`. It has no `effective` column, and its rows are only the rules those four presets mention.
+`comparison-rslint.md` is a second output (same generator run) comparing typescript-eslint and Rslint presets side by side: `ts/rec`, `rslint:ts/rec`, `@ts/tc-only`, `rslint:ts/tc-only`. It has no `effective` column, and its rows are only the rules those four presets mention.
 
 - `config/rslint.ts` merges `ts.configs` from `@rslint/core` by hand (they are arrays of `{ files, rules }` entries with `plugins` as a name list, not ESLint flat config, so `calculateConfigForFile` can't resolve them).
+- Rslint has no tc-only preset, so `config/rslint.ts` derives it like typescript-eslint's `recommended-type-checked-only`: the `files`-scoped entries plus the rules `recommendedTypeChecked` adds over `recommended`.
 - The `rslint impl.` column (✅/🚫) comes from running the Rslint binary with every ESLint/typescript-eslint rule enabled and `--timing all`: rules Rslint ran are implemented, unknown ones are ignored silently. Generation therefore needs the platform's `@rslint/native-*` optional dependency.
 
 ## GitHub Pages

@@ -53,12 +53,20 @@ const findImplemented = (candidates: string[]): Set<string> => {
   }
 }
 
+// Rslint has no tc-only preset. Mirror typescript-eslint's `recommended-type-checked-only`: the `files`-scoped
+// (eslint-recommended) entries plus the rules `recommendedTypeChecked` adds on top of `recommended`.
+const typeCheckedOnly = (recommended: RslintEntry[], typeChecked: RslintEntry[]): RulesConfig => {
+  const recommendedRules = mergeRules(recommended)
+  const added = Object.fromEntries(Object.entries(mergeRules(typeChecked)).filter(([name]) => !(name in recommendedRules)))
+  return { ...mergeRules(typeChecked.filter(entry => entry.files)), ...added }
+}
+
 const loadConfigs = async (candidates: string[]) => {
   const configs = ts.configs as unknown as Record<string, RslintEntry[]>
   return {
     implemented: findImplemented(candidates),
     recommended: mergeRules(configs.recommended),
-    'recommended-type-checked': mergeRules(configs.recommendedTypeChecked),
+    'recommended-type-checked-only': typeCheckedOnly(configs.recommended, configs.recommendedTypeChecked),
   }
 }
 

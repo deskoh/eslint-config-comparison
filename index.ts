@@ -30,15 +30,15 @@ async function generate() {
   const rslintDb = new RulesDb()
   rslintDb.addRules(Object.keys({
     ...typescriptConfig.recommended,
-    ...typescriptConfig['recommended-type-checked'],
+    ...typescriptConfig['recommended-type-checked-only'],
     ...rslintConfig.recommended,
-    ...rslintConfig['recommended-type-checked'],
+    ...rslintConfig['recommended-type-checked-only'],
   }))
 
   rslintDb.addConfig(typescriptConfig.recommended, 'ts/recommended')
   rslintDb.addConfig(rslintConfig.recommended, 'rslint:ts/recommended')
-  rslintDb.addConfig(typescriptConfig['recommended-type-checked'], 'ts/recommended-tc')
-  rslintDb.addConfig(rslintConfig['recommended-type-checked'], 'rslint:ts/recommended-tc')
+  rslintDb.addConfig(typescriptConfig['recommended-type-checked-only'], '@ts/tc-only')
+  rslintDb.addConfig(rslintConfig['recommended-type-checked-only'], 'rslint:ts/tc-only')
 
   generateMarkdown(rslintDb, 'comparison-rslint.md', {
     title: 'typescript-eslint vs Rslint Comparison',
